@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>German Language Practice - Sprechen Teil 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* More vibrant and dynamic gradient background */
+            background: linear-gradient(135deg, #6dd5ed 0%, #2193b0 50%, #005f73 100%); /* Light blue to darker teal */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem; /* Slightly more padding around the main container */
+        }
+
+        /* Enhanced Glassmorphism styles */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1); /* Slightly less opaque for more transparency */
+            backdrop-filter: blur(12px); /* Increased blur for stronger effect */
+            -webkit-backdrop-filter: blur(12px); /* Safari support */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Thinner, more subtle border */
+            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.2); /* More pronounced shadow for depth */
+            border-radius: 25px; /* More rounded corners */
+            padding: 2.5rem; /* Increased internal padding */
+        }
+
+        .card.glass-effect {
+            background: rgba(255, 255, 255, 0.15); /* Slightly more opaque for cards */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Refined card shadow */
+            border-radius: 18px; /* Slightly more rounded */
+        }
+
+        .card-selected {
+            @apply ring-4 ring-blue-300 ring-offset-4 ring-offset-transparent; /* Lighter ring, more offset */
+        }
+
+        .question-box.glass-effect,
+        .answer-box.glass-effect {
+            background: rgba(255, 255, 255, 0.2); /* Consistent transparency for QA boxes */
+            backdrop-filter: blur(14px); /* Stronger blur for QA content */
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Deeper shadow for QA boxes */
+            border-radius: 22px; /* More rounded */
+            padding: 2.5rem; /* Consistent padding */
+            min-height: 180px; /* Added min-height for stability */
+            display: flex; /* Use flexbox for vertical alignment */
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+        }
+
+        /* Text colors for optimal contrast on glassmorphism */
+        h1, h2, h3, p, li {
+            color: #f0f9ff; /* Very light blue/white for primary text */
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3); /* Slightly stronger text shadow */
+        }
+        .card {
+            color: #e0f2fe; /* Lighter blue for card text */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+        }
+        .text-gray-700, .text-gray-800 { /* Override specific text colors for glassmorphism */
+            color: #f0f9ff;
+        }
+        .text-blue-700, .text-blue-800 {
+            color: #e0f2fe; /* Maintain light blue for headings */
+        }
+        .text-green-800 {
+            color: #c8e6c9; /* Maintain light green for answers */
+        }
+
+        /* Button styles adjusted for glassmorphism with subtle gradients */
+        .button-primary {
+            @apply px-9 py-4 font-bold rounded-full shadow-xl hover:scale-105 transition-all duration-300;
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.8), rgba(25, 118, 210, 0.8)); /* Dodger Blue gradient */
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            color: #fff;
+        }
+        .button-primary:hover {
+            background: linear-gradient(135deg, rgba(25, 118, 210, 0.9), rgba(15, 75, 150, 0.9));
+        }
+        .button-primary:disabled {
+            background: rgba(100, 100, 100, 0.4);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .button-secondary {
+            @apply px-7 py-3 font-semibold rounded-lg shadow-md transition-colors duration-200;
+            background: rgba(150, 150, 150, 0.4); /* Lighter gray with transparency */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            color: #fff;
+        }
+        .button-secondary:hover {
+            background: rgba(170, 170, 170, 0.6);
+        }
+        .button-secondary:disabled {
+            background: rgba(100, 100, 100, 0.2);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .button-success {
+            @apply px-7 py-3 font-bold rounded-lg shadow-md transition-colors duration-200;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.8), rgba(56, 142, 60, 0.8)); /* Green gradient */
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            color: #fff;
+        }
+        .button-success:hover {
+            background: linear-gradient(135deg, rgba(56, 142, 60, 0.9), rgba(27, 94, 32, 0.9));
+        }
+        .button-success:disabled {
+            background: rgba(100, 100, 100, 0.4);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .button-warning {
+            @apply px-7 py-3 font-bold rounded-lg shadow-md transition-colors duration-200;
+            background: linear-gradient(135deg, rgba(255, 159, 0, 0.8), rgba(255, 140, 0, 0.8)); /* Orange gradient */
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            color: #fff;
+        }
+        .button-warning:hover {
+            background: linear-gradient(135deg, rgba(255, 140, 0, 0.9), rgba(230, 81, 0, 0.9));
+        }
+        .button-warning:disabled {
+            background: rgba(100, 100, 100, 0.4);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Adjust grid gaps for better spacing */
+        .grid {
+            gap: 1.5rem; /* Increased gap for a cleaner look */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container glass-effect">
+        <h1 class="text-4xl font-extrabold text-center mb-8">
+            <span class="text-white">German Language Practice</span>
+            <br>
+            <span class="text-2xl font-semibold text-white">Sprechen Teil 2 - Vorbereitung</span>
+        </h1>
+
+        <!-- Topic Selection -->
+        <div id="topic-selection" class="mb-10">
+            <h2 class="text-2xl font-semibold text-center mb-6">Wählen Sie ein Thema:</h2>
+            <div id="topic-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Topic cards will be injected here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Question and Answer Section -->
+        <div id="qa-section" class="hidden">
+            <button id="back-to-topics" class="button-secondary mb-8">
+                &larr; Zurück zu den Themen
+            </button>
+            <h2 id="current-topic-title" class="text-3xl font-bold text-center mb-4"></h2>
+            <p id="topic-description" class="text-center text-white mb-8"></p>
+
+            <div id="keyword-selection" class="mb-10">
+                <h3 class="text-xl font-semibold text-center mb-6">Wählen Sie ein Stichwort zum Üben:</h3>
+                <div id="keyword-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                    <!-- Keyword cards will be injected here by JavaScript -->
+                </div>
+            </div>
+
+            <div id="question-answer-display" class="hidden">
+                <div class="question-box glass-effect mb-6 text-left">
+                    <h3 class="text-2xl font-bold mb-4">Fragen zum Stichwort:</h3>
+                    <ul id="question-list" class="list-disc list-inside text-xl leading-relaxed space-y-2">
+                        <!-- Questions will be injected here -->
+                    </ul>
+                </div>
+
+                <div class="text-center mb-6">
+                    <button id="show-answer-button" class="button-primary">
+                        Antwort anzeigen
+                    </button>
+                </div>
+
+                <div id="answer-display" class="answer-box glass-effect hidden text-left">
+                    <h3 class="text-2xl font-bold mb-4">Vorschlag für Ihre Antwort:</h3>
+                    <p id="answer-text" class="text-xl leading-relaxed"></p>
+                </div>
+
+                <div class="text-center mt-8 space-x-4">
+                    <button id="previous-keyword-button" class="button-warning">
+                        &larr; Vorheriges Stichwort
+                    </button>
+                    <button id="next-keyword-button" class="button-success">
+                        Nächstes Stichwort &rarr;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Data extracted from the images, expanded with multiple questions and detailed answers
+        const topicsData = {
+            "Lernen": {
+                description: "Thema: Lernen (Modelltest 3)",
+                keywords: {
+                    "Sprachen": {
+                        questions: [
+                            "Welche Sprachen lernst du?",
+                            "Warum lernst du Sprachen?",
+                            "Wie lernst du am besten?"
+                        ],
+                        answer: "Ich lerne Deutsch und Englisch. Ich lerne Sprachen, um mit Menschen zu sprechen und andere Kulturen zu verstehen. Am besten lerne ich durch Sprechen und Üben."
+                    },
+                    "Bücher": {
+                        questions: [
+                            "Liest du gern Bücher?",
+                            "Welche Bücher magst du?",
+                            "Wann liest du am liebsten?"
+                        ],
+                        answer: "Ja, ich lese gern Bücher. Ich mag Romane und Sachbücher. Am liebsten lese ich abends oder am Wochenende."
+                    },
+                    "Schule": {
+                        questions: [
+                            "Was war dein Lieblingsfach?",
+                            "Was war dein unbeliebtes Fach?",
+                            "Was war in der Schule nützlich?"
+                        ],
+                        answer: "Mein Lieblingsfach war Geschichte. Mathematik mochte ich nicht so gern. Das kritische Denken war sehr nützlich."
+                    },
+                    "Internet": {
+                        questions: [
+                            "Wie nutzt du das Internet zum Lernen?",
+                            "Was sind Vorteile des Internets?",
+                            "Kann das Internet Lehrer ersetzen?"
+                        ],
+                        answer: "Ich nutze das Internet für Recherchen und Online-Kurse. Der Vorteil ist der leichte Zugang zu Informationen. Nein, das Internet kann Lehrer nicht ersetzen."
+                    },
+                    "Lehrer": {
+                        questions: [
+                            "Was macht einen guten Lehrer aus?",
+                            "Erinnerst du dich an einen guten Lehrer?",
+                            "Wie wichtig ist die Lehrer-Schüler-Beziehung?"
+                        ],
+                        answer: "Ein guter Lehrer motiviert und erklärt gut. Ja, ich erinnere mich an meinen Geschichtslehrer. Die Beziehung ist sehr wichtig für den Lernerfolg."
+                    },
+                    "zu Hause": {
+                        questions: [
+                            "Was lernst du gern zu Hause?",
+                            "Lernst du allein oder in Gruppen?",
+                            "Welche Hilfsmittel nutzt du?"
+                        ],
+                        answer: "Ich lerne gern Kochen oder Musikinstrumente. Ich lerne lieber allein. Ich nutze Online-Tutorials und Bücher."
+                    }
+                }
+            },
+            "Sport": {
+                description: "Thema: Sport (Modelltest 3)",
+                keywords: {
+                    "Fußball": {
+                        questions: [
+                            "Spielst oder schaust du Fußball?",
+                            "Welche Rolle spielt Fußball in deinem Land?",
+                            "Wer ist dein Lieblingsspieler?"
+                        ],
+                        answer: "Ich schaue lieber Fußball. Fußball ist in meinem Land sehr beliebt. Mein Lieblingsspieler ist Lionel Messi."
+                    },
+                    "Fahrrad fahren": {
+                        questions: [
+                            "Fährst du gern Fahrrad?",
+                            "Wo fährst du am liebsten?",
+                            "Was sind die Vorteile?"
+                        ],
+                        answer: "Ja, ich fahre gern Fahrrad. Am liebsten in der Natur. Es ist gesund und umweltfreundlich."
+                    },
+                    "schwimmen": {
+                        questions: [
+                            "Gehst du gern schwimmen?",
+                            "Wo schwimmst du am liebsten?",
+                            "Wie oft gehst du schwimmen?"
+                        ],
+                        answer: "Ja, ich gehe gern schwimmen. Am liebsten im See oder im Freibad. Ich gehe ein- bis zweimal pro Woche schwimmen."
+                    },
+                    "wandern": {
+                        questions: [
+                            "Gehst du gern wandern?",
+                            "Wohin gehst du gern?",
+                            "Was ist das Schönste am Wandern?"
+                        ],
+                        answer: "Ja, ich wandere gern. Ich gehe am liebsten in den Bergen wandern. Die schöne Aussicht ist das Schönste."
+                    },
+                    "Verein": {
+                        questions: [
+                            "Bist du in einem Sportverein?",
+                            "Was sind die Vorteile eines Vereins?",
+                            "Würdest du einen Verein empfehlen?"
+                        ],
+                        answer: "Nein, ich bin nicht in einem Sportverein. Vorteile sind neue Leute und Motivation. Ja, ich würde einen Verein empfehlen."
+                    },
+                    "Wochenende": {
+                        questions: [
+                            "Welchen Sport machst du am Wochenende?",
+                            "Ist Sport am Wochenende wichtig?",
+                            "Machst du Sport drinnen oder draußen?"
+                        ],
+                        answer: "Am Wochenende jogge ich oder mache Yoga. Sport ist sehr wichtig für mich. Ich mache Sport lieber draußen."
+                    }
+                }
+            },
+            "Reisen": {
+                description: "Thema: Reisen (Modelltest 2)",
+                keywords: {
+                    "Wohin?": {
+                        questions: [
+                            "Wohin reist du am liebsten?",
+                            "Welches Land möchtest du besuchen?",
+                            "Welche Art von Urlaub magst du?"
+                        ],
+                        answer: "Ich reise am liebsten ans Meer. Ich möchte Japan besuchen. Ich mag Strand- und Kultururlaub."
+                    },
+                    "Hotel": {
+                        questions: [
+                            "Hotel oder Ferienwohnung?",
+                            "Was ist wichtig bei der Unterkunft?",
+                            "Hast du gute Hotelerfahrungen?"
+                        ],
+                        answer: "Ich mag Ferienwohnungen lieber, wegen des Platzes. Sauberkeit und Lage sind wichtig. Ja, ich habe meistens gute Hotelerfahrungen."
+                    },
+                    "Urlaub": {
+                        questions: [
+                            "Was machst du gern im Urlaub?",
+                            "Wie lange dauert dein idealer Urlaub?",
+                            "Was ist das Wichtigste am Urlaub?"
+                        ],
+                        answer: "Im Urlaub entspanne ich, lese und entdecke Neues. Zwei Wochen sind ideal. Das Wichtigste ist Erholung und neue Eindrücke."
+                    },
+                    "Länder": {
+                        questions: [
+                            "Welche Länder möchtest du besuchen?",
+                            "Gibt es ein Land, das du nicht besuchen würdest?",
+                            "Welches Land hat dich beeindruckt?"
+                        ],
+                        answer: "Ich möchte Neuseeland und Kanada besuchen. Es gibt kein Land, das ich nicht besuchen würde. Italien hat mich am meisten beeindruckt."
+                    },
+                    "Auto": {
+                        questions: [
+                            "Reist du gern mit dem Auto?",
+                            "Vorteile und Nachteile des Autos?",
+                            "Welche anderen Verkehrsmittel nutzt du?"
+                        ],
+                        answer: "Ja, ich reise gern mit dem Auto, wegen der Flexibilität. Vorteil ist Freiheit, Nachteil ist Stau. Ich nutze auch gern den Zug."
+                    },
+                    "Wann?": {
+                        questions: [
+                            "Wann machst du am liebsten Urlaub?",
+                            "Planst du spontan oder im Voraus?",
+                            "Welche Jahreszeit bevorzugst du?"
+                        ],
+                        answer: "Ich mache am liebsten im Frühling oder Herbst Urlaub. Ich plane meistens im Voraus. Ich bevorzuge den Frühling."
+                    }
+                }
+            },
+            "Essen und Trinken": {
+                description: "Thema: Essen und Trinken (Modelltest 2)",
+                keywords: {
+                    "Lieblingsessen": {
+                        questions: [
+                            "Was ist dein Lieblingsessen?",
+                            "Gibt es ein Gericht, das du nicht magst?",
+                            "Wie oft isst du dein Lieblingsessen?"
+                        ],
+                        answer: "Mein Lieblingsessen ist Pizza. Ich mag keine Oliven. Ich esse es etwa einmal im Monat."
+                    },
+                    "kochen": {
+                        questions: [
+                            "Kochst du gern?",
+                            "Was kochst du am liebsten?",
+                            "Kochst du allein oder mit anderen?"
+                        ],
+                        answer: "Ja, ich koche gern. Am liebsten italienische Gerichte. Ich koche am liebsten mit Freunden."
+                    },
+                    "Frühstück": {
+                        questions: [
+                            "Was isst du zum Frühstück?",
+                            "Ist Frühstück wichtig für dich?",
+                            "Süß oder herzhaft?"
+                        ],
+                        answer: "Ich esse Müsli oder Brot. Ja, Frühstück ist sehr wichtig. Ich mag eine Mischung aus süß und herzhaft."
+                    },
+                    "Lieblingsgetränk": {
+                        questions: [
+                            "Was ist dein Lieblingsgetränk?",
+                            "Welche Getränke trinkst du im Alltag?",
+                            "Trinkst du gern Kaffee oder Tee?"
+                        ],
+                        answer: "Mein Lieblingsgetränk ist Orangensaft. Im Alltag trinke ich Wasser und Tee. Ja, ich trinke gern Tee."
+                    },
+                    "Bier": {
+                        questions: [
+                            "Trinkst du gern Bier?",
+                            "Zu welchen Anlässen trinkst du Bier?",
+                            "Was ist dein Lieblingsgetränk ohne Alkohol?"
+                        ],
+                        answer: "Ja, ich trinke ab und zu Bier. Ich trinke es beim Grillen oder Fußball. Mein Lieblingsgetränk ohne Alkohol ist Limonade."
+                    },
+                    "Fleisch": {
+                        questions: [
+                            "Isst du gern Fleisch?",
+                            "Wie oft isst du Fleisch?",
+                            "Welche Fleischsorten magst du?"
+                        ],
+                        answer: "Ja, ich esse gern Fleisch. Ich esse es zwei- bis dreimal pro Woche. Ich mag Hähnchen oder Rindfleisch."
+                    }
+                }
+            },
+            "Arbeit und Beruf": {
+                description: "Thema: Arbeit und Beruf (Modelltest 4)",
+                keywords: {
+                    "Arbeit": {
+                        questions: [
+                            "Was ist dir bei der Arbeit wichtig?",
+                            "Was motiviert dich bei der Arbeit?",
+                            "Wie wichtig ist Work-Life-Balance?"
+                        ],
+                        answer: "Gutes Klima und Lernmöglichkeiten sind wichtig. Mich motiviert positiver Einfluss. Work-Life-Balance ist sehr wichtig."
+                    },
+                    "Kollegen": {
+                        questions: [
+                            "Was schätzt du an Kollegen?",
+                            "Wie wichtig ist Teamwork?",
+                            "Was machst du gern mit Kollegen?"
+                        ],
+                        answer: "Ich schätze Hilfsbereitschaft und Humor. Teamwork ist sehr wichtig. Manchmal gehe ich mit Kollegen Mittagessen."
+                    },
+                    "Arbeitsplatz": {
+                        questions: [
+                            "Wie sieht dein idealer Arbeitsplatz aus?",
+                            "Arbeitest du lieber im Büro oder Homeoffice?",
+                            "Was ist wichtig an der Ausstattung?"
+                        ],
+                        answer: "Mein idealer Arbeitsplatz ist hell und ruhig. Ich arbeite am liebsten hybrid. Ein großer Bildschirm und ergonomische Tastatur sind wichtig."
+                    },
+                    "Chef": {
+                        questions: [
+                            "Was ist dir bei einem Chef wichtig?",
+                            "Welche Eigenschaften sollte ein Chef haben?",
+                            "Hast du gute Erfahrungen mit Chefs?"
+                        ],
+                        answer: "Ein Chef sollte fair sein und Leistungen anerkennen. Er sollte auch gut kommunizieren. Ja, ich habe meistens gute Erfahrungen gemacht."
+                    },
+                    "arbeitslos": {
+                        questions: [
+                            "Was würdest du tun, wenn du arbeitslos wärst?",
+                            "Wie würdest du die Zeit nutzen?",
+                            "Welche Unterstützung würdest du suchen?"
+                        ],
+                        answer: "Ich würde mich sofort bewerben und mich weiterbilden. Ich würde die Zeit für neue Fähigkeiten nutzen. Ich würde Unterstützung bei der Arbeitsagentur suchen."
+                    },
+                    "Urlaub": {
+                        questions: [
+                            "Wie oft machst du Urlaub?",
+                            "Wie wichtig ist Urlaub für deine Erholung?",
+                            "Was machst du im Urlaub zur Erholung?"
+                        ],
+                        answer: "Ich mache zweimal im Jahr Urlaub. Urlaub ist extrem wichtig für meine Erholung. Ich schalte mein Handy aus und lese viel."
+                    }
+                }
+            },
+            "Wochenende": {
+                description: "Thema: Wochenende (Modelltest 4)",
+                keywords: {
+                    "Ausflug": {
+                        questions: [
+                            "Machst du gern Ausflüge am Wochenende?",
+                            "Wohin gehst du gern?",
+                            "Mit wem machst du Ausflüge?"
+                        ],
+                        answer: "Ja, ich mache gern Ausflüge in die Natur oder Städte. Ich gehe gern mit meiner Familie oder Freunden. Eine Wanderung in den Alpen war mein schönster Ausflug."
+                    },
+                    "Sport": {
+                        questions: [
+                            "Machst du Sport am Wochenende?",
+                            "Ist Sport am Wochenende wichtig?",
+                            "Machst du Sport drinnen oder draußen?"
+                        ],
+                        answer: "Ja, ich jogge oder fahre Fahrrad. Sport ist sehr wichtig für mich. Ich mache Sport lieber draußen."
+                    },
+                    "fernsehen": {
+                        questions: [
+                            "Schaust du gern fern am Wochenende?",
+                            "Was schaust du am liebsten?",
+                            "Wie viel Zeit verbringst du vor dem Fernseher?"
+                        ],
+                        answer: "Manchmal schaue ich fern. Ich schaue am liebsten Filme oder Dokus. Ich verbringe 2-3 Stunden am Wochenende vor dem Fernseher."
+                    },
+                    "Kino": {
+                        questions: [
+                            "Gehst du gern ins Kino am Wochenende?",
+                            "Welche Filme schaust du gern im Kino?",
+                            "Wann warst du das letzte Mal im Kino?"
+                        ],
+                        answer: "Ja, ich gehe gern ins Kino, wegen der Atmosphäre. Ich schaue am liebsten Actionfilme oder Komödien. Ich war vor zwei Wochen im Kino."
+                    },
+                    "kochen": {
+                        questions: [
+                            "Kochst du gern am Wochenende?",
+                            "Was kochst du am liebsten?",
+                            "Kochst du allein oder für andere?"
+                        ],
+                        answer: "Ja, ich koche gern am Wochenende. Ich probiere gern neue Rezepte aus. Ich koche am liebsten für meine Familie und Freunde."
+                    },
+                    "schlafen": {
+                        questions: [
+                            "Schläfst du am Wochenende länger?",
+                            "Wie viele Stunden schläfst du?",
+                            "Was machst du, um gut zu schlafen?"
+                        ],
+                        answer: "Ja, ich schlafe länger am Wochenende. Meistens 8-9 Stunden. Ich lese vor dem Schlafengehen, um gut zu schlafen."
+                    }
+                }
+            },
+            "Einkaufen": {
+                description: "Thema: Einkaufen (Modelltest 1)",
+                keywords: {
+                    "Wo am liebsten?": {
+                        questions: [
+                            "Wo kaufst du am liebsten ein?",
+                            "Kaufst du online oder im Geschäft?",
+                            "Was ist dir beim Einkaufen wichtig?"
+                        ],
+                        answer: "Ich kaufe am liebsten im Supermarkt ein. Ich kaufe beides, online und im Geschäft. Frische Produkte und guter Preis sind wichtig."
+                    },
+                    "Markt": {
+                        questions: [
+                            "Gehst du gern auf den Markt?",
+                            "Was kaufst du dort?",
+                            "Was sind die Vorteile des Marktes?"
+                        ],
+                        answer: "Ja, ich gehe gern auf den Wochenmarkt. Ich kaufe frisches Obst und Gemüse. Die Produkte sind frischer und man trifft Leute."
+                    },
+                    "Gemüse": {
+                        questions: [
+                            "Welches Gemüse kaufst du am häufigsten?",
+                            "Kochst du gern mit viel Gemüse?",
+                            "Gibt es ein Gemüse, das du nicht magst?"
+                        ],
+                        answer: "Ich kaufe am häufigsten Tomaten und Gurken. Ja, ich koche gern mit viel Gemüse. Ich mag keine Zwiebeln."
+                    },
+                    "Getränke": {
+                        questions: [
+                            "Welche Getränke kaufst du regelmäßig?",
+                            "Wasser mit oder ohne Kohlensäure?",
+                            "Gibt es ein Getränk für besondere Anlässe?"
+                        ],
+                        answer: "Ich kaufe regelmäßig Wasser und Saft. Ich trinke lieber Wasser ohne Kohlensäure. Champagner trinke ich zu besonderen Anlässen."
+                    },
+                    "Schokolade": {
+                        questions: [
+                            "Kaufst du gern Schokolade?",
+                            "Welche Sorte magst du?",
+                            "Wie oft isst du Schokolade?"
+                        ],
+                        answer: "Ja, ich kaufe gern Schokolade. Ich mag dunkle Schokolade mit Nüssen. Ich esse fast jeden Tag ein kleines Stück."
+                    },
+                    "Wann?": {
+                        questions: [
+                            "Wann gehst du am liebsten einkaufen?",
+                            "Planst du deine Einkäufe?",
+                            "Gehst du allein oder mit jemandem einkaufen?"
+                        ],
+                        answer: "Ich gehe am liebsten vormittags einkaufen. Ja, ich plane meine Einkäufe. Ich gehe lieber allein einkaufen."
+                    }
+                }
+            },
+            "Freizeit": {
+                description: "Thema: Freizeit (Modelltest 1)",
+                keywords: {
+                    "Hobby": {
+                        questions: [
+                            "Was ist dein Hobby?",
+                            "Wie viel Zeit verbringst du mit deinem Hobby?",
+                            "Möchtest du ein neues Hobby lernen?"
+                        ],
+                        answer: "Mein Hobby ist Lesen und Wandern. Ich verbringe 5-7 Stunden pro Woche damit. Ja, ich möchte Gitarre spielen lernen."
+                    },
+                    "Wochenende": {
+                        questions: [
+                            "Was machst du am Wochenende?",
+                            "Planst du dein Wochenende spontan?",
+                            "Was ist ein perfektes Wochenende?"
+                        ],
+                        answer: "Ich treffe Freunde oder mache Ausflüge. Ich plane meistens spontan. Ein perfektes Wochenende ist entspannt und aktiv."
+                    },
+                    "Wann?": {
+                        questions: [
+                            "Wann hast du am meisten Freizeit?",
+                            "Wie nutzt du deine Freizeit?",
+                            "Hast du manchmal zu wenig Freizeit?"
+                        ],
+                        answer: "Ich habe abends und am Wochenende am meisten Freizeit. Ich nutze sie zum Entspannen und für Hobbys. Ja, manchmal habe ich zu wenig Freizeit."
+                    },
+                    "Fußball": {
+                        questions: [
+                            "Schaust oder spielst du Fußball?",
+                            "Welche Rolle spielt Fußball im Freundeskreis?",
+                            "Welches ist dein Lieblingsfußballteam?"
+                        ],
+                        answer: "Ich schaue gern Fußball. Fußball ist ein großes Thema im Freundeskreis. Mein Lieblingsfußballteam ist FC Barcelona."
+                    },
+                    "Lieblingssport": {
+                        questions: [
+                            "Was ist dein Lieblingssport?",
+                            "Wie oft machst du deinen Lieblingssport?",
+                            "Möchtest du einen neuen Sport ausprobieren?"
+                        ],
+                        answer: "Mein Lieblingssport ist Schwimmen. Ich schwimme zweimal pro Woche. Ja, ich möchte Klettern ausprobieren."
+                    },
+                    "Sonntag": {
+                        questions: [
+                            "Was machst du am Sonntag?",
+                            "Ist Sonntag ein Ruhetag?",
+                            "Was ist dein Lieblingsessen am Sonntag?"
+                        ],
+                        answer: "Am Sonntag entspanne ich und koche. Sonntag ist ein Ruhetag und Aktivitätstag. Mein Lieblingsessen ist ein großer Brunch."
+                    }
+                }
+            }
+        };
+
+        let currentTopic = null;
+        let currentKeywordIndex = 0;
+        let currentKeywords = [];
+
+        const topicCardsContainer = document.getElementById('topic-cards');
+        const qaSection = document.getElementById('qa-section');
+        const backToTopicsButton = document.getElementById('back-to-topics');
+        const currentTopicTitle = document.getElementById('current-topic-title');
+        const topicDescription = document.getElementById('topic-description');
+        const keywordCardsContainer = document.getElementById('keyword-cards');
+        const questionAnswerDisplay = document.getElementById('question-answer-display');
+        const questionList = document.getElementById('question-list');
+        const answerDisplay = document.getElementById('answer-display');
+        const answerText = document.getElementById('answer-text');
+        const showAnswerButton = document.getElementById('show-answer-button');
+        const nextKeywordButton = document.getElementById('next-keyword-button');
+        const previousKeywordButton = document.getElementById('previous-keyword-button');
+
+        // Function to render topic cards
+        function renderTopicCards() {
+            topicCardsContainer.innerHTML = '';
+            Object.keys(topicsData).forEach(topic => {
+                const card = document.createElement('div');
+                card.className = 'card glass-effect flex items-center justify-center p-8 text-2xl font-bold text-gray-700 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200';
+                card.textContent = topic;
+                card.dataset.topic = topic;
+                card.addEventListener('click', () => selectTopic(topic));
+                topicCardsContainer.appendChild(card);
+            });
+        }
+
+        // Function to select a topic
+        function selectTopic(topic) {
+            currentTopic = topic;
+            currentKeywords = Object.keys(topicsData[topic].keywords);
+            currentKeywordIndex = 0;
+
+            document.getElementById('topic-selection').classList.add('hidden');
+            qaSection.classList.remove('hidden');
+            currentTopicTitle.textContent = `Thema: ${topic}`;
+            topicDescription.textContent = topicsData[topic].description;
+            renderKeywordCards();
+            questionAnswerDisplay.classList.add('hidden'); // Hide QA display when selecting new topic
+            answerDisplay.classList.add('hidden'); // Hide answer when selecting new topic
+            showAnswerButton.classList.remove('hidden'); // Show show answer button
+            updateNavigationButtons(); // Update button states
+        }
+
+        // Function to render keyword cards for the selected topic
+        function renderKeywordCards() {
+            keywordCardsContainer.innerHTML = '';
+            currentKeywords.forEach((keyword, index) => {
+                const card = document.createElement('div');
+                card.className = 'card glass-effect flex items-center justify-center p-6 text-xl font-semibold text-gray-700 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200';
+                card.textContent = keyword;
+                card.dataset.keywordIndex = index;
+                card.addEventListener('click', () => selectKeyword(index));
+                keywordCardsContainer.appendChild(card);
+            });
+        }
+
+        // Function to select a keyword
+        function selectKeyword(index) {
+            currentKeywordIndex = index;
+            const keyword = currentKeywords[currentKeywordIndex];
+            const data = topicsData[currentTopic].keywords[keyword];
+
+            questionList.innerHTML = ''; // Clear previous questions
+            data.questions.forEach(q => {
+                const listItem = document.createElement('li');
+                listItem.textContent = q;
+                questionList.appendChild(listItem);
+            });
+
+            answerText.textContent = data.answer;
+
+            // Highlight selected keyword card
+            document.querySelectorAll('#keyword-cards .card').forEach((card, i) => {
+                if (parseInt(card.dataset.keywordIndex) === index) {
+                    card.classList.add('card-selected');
+                } else {
+                    card.classList.remove('card-selected');
+                }
+            });
+
+            questionAnswerDisplay.classList.remove('hidden');
+            answerDisplay.classList.add('hidden'); // Hide answer initially
+            showAnswerButton.classList.remove('hidden'); // Show show answer button
+            updateNavigationButtons(); // Update button states
+        }
+
+        // Function to update the disabled state of navigation buttons
+        function updateNavigationButtons() {
+            previousKeywordButton.disabled = currentKeywordIndex === 0;
+            nextKeywordButton.disabled = currentKeywordIndex === currentKeywords.length - 1;
+        }
+
+        // Event listener for "Back to Topics" button
+        backToTopicsButton.addEventListener('click', () => {
+            qaSection.classList.add('hidden');
+            document.getElementById('topic-selection').classList.remove('hidden');
+            currentTopic = null;
+            currentKeywords = [];
+            currentKeywordIndex = 0;
+            questionAnswerDisplay.classList.add('hidden');
+            answerDisplay.classList.add('hidden');
+            showAnswerButton.classList.remove('hidden');
+        });
+
+        // Event listener for "Show Answer" button
+        showAnswerButton.addEventListener('click', () => {
+            answerDisplay.classList.remove('hidden');
+            showAnswerButton.classList.add('hidden');
+        });
+
+        // Event listener for "Next Keyword" button
+        nextKeywordButton.addEventListener('click', () => {
+            if (currentKeywordIndex < currentKeywords.length - 1) {
+                selectKeyword(currentKeywordIndex + 1);
+            }
+        });
+
+        // Event listener for "Previous Keyword" button
+        previousKeywordButton.addEventListener('click', () => {
+            if (currentKeywordIndex > 0) {
+                selectKeyword(currentKeywordIndex - 1);
+            }
+        });
+
+        // Initial render of topic cards when the page loads
+        document.addEventListener('DOMContentLoaded', renderTopicCards);
+
+    </script>
+  
+</body>
+
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deutsch Sprechen Level 1 - Teil 3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Vibrant gradient background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            color: #e0e7ff; /* Light text color for contrast */
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.15); /* Slightly more opaque glass */
+            backdrop-filter: blur(15px); /* Stronger blur */
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3); /* More defined border */
+            border-radius: 25px; /* Softer rounded corners */
+            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4); /* Enhanced shadow */
+            padding: 40px;
+            max-width: 1000px; /* Wider container */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            position: relative; /* For background elements */
+            overflow: hidden; /* Ensure background elements don't spill */
+        }
+
+        /* Abstract background shapes for more visual interest */
+        .glass-container::before,
+        .glass-container::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            filter: blur(50px);
+            z-index: -1;
+        }
+
+        .glass-container::before {
+            width: 150px;
+            height: 150px;
+            top: -50px;
+            left: -50px;
+        }
+
+        .glass-container::after {
+            width: 200px;
+            height: 200px;
+            bottom: -70px;
+            right: -70px;
+        }
+
+        .topic-card {
+            background: rgba(255, 255, 255, 0.08); /* Slightly more visible card background */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .question-section, .answer-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+        }
+
+        .answer-section {
+            display: none; /* Hidden by default */
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(45deg, #8a2be2, #00bfff); /* Gradient button */
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700; /* Bolder text */
+            color: #ffffff;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+        }
+
+        .nav-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 14px 28px;
+            border-radius: 18px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #e0e7ff;
+            transition: background 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .nav-button.active {
+            background: linear-gradient(45deg, #00bfff, #8a2be2); /* Active button gradient */
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-1px);
+        }
+
+        h1, h2, h3 {
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-700 to-blue-500 min-h-screen flex items-center justify-center p-5">
+
+    <div class="glass-container">
+        <h1 class="text-4xl font-bold text-center mb-6 text-white">Deutsch Sprechen Level 1 - Teil 3</h1>
+        <p class="text-center text-xl mb-8 text-gray-200">Wählen Sie ein Thema, um Fragen und Antworten zu üben.</p>
+
+        <!-- Navigation for Topics -->
+        <div class="flex flex-wrap justify-center gap-5 mb-8">
+            <!-- Buttons will be dynamically generated here -->
+        </div>
+
+        <!-- Content Area for Questions and Answers -->
+        <div id="content-area" class="flex flex-col gap-8">
+            <!-- Content will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script>
+        const topics = {
+            // Image 1 (Screenshot_20250703_224058_Drive.jpg - 12 items)
+            uhr_armband_1: { title: "Die Armbanduhr (1)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Armbanduhr." }, { q: "2. Ist sie modern?", a: "Ja, sie ist sehr modern." }, { q: "3. Trägst du oft eine Uhr?", a: "Ja, ich trage oft eine Uhr." }] },
+            regal_1: { title: "Das Regal (1)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Regal." }, { q: "2. Ist das Regal groß?", a: "Ja, das Regal ist groß." }, { q: "3. Stehen Bücher im Regal?", a: "Ja, es stehen Bücher im Regal." }] },
+            fotos_1: { title: "Die Fotos (1)", questions: [{ q: "1. Was sind das?", a: "Das sind Fotos." }, { q: "2. Sind die Fotos alt?", a: "Nein, die Fotos sind neu." }, { q: "3. Von wem sind die Fotos?", a: "Die Fotos sind von meiner Familie." }] },
+            taschenrechner_1: { title: "Der Taschenrechner (1)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Taschenrechner." }, { q: "2. Brauchst du ihn oft?", a: "Ja, ich brauche ihn oft für die Arbeit." }, { q: "3. Kannst du damit rechnen?", a: "Ja, ich kann damit rechnen." }] },
+            fahrrad_1: { title: "Das Fahrrad (1)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Fahrrad." }, { q: "2. Ist das Fahrrad rot?", a: "Nein, es ist blau." }, { q: "3. Fährst du gern Fahrrad?", a: "Ja, ich fahre sehr gern Fahrrad." }] },
+            milch_1: { title: "Die Milch (1)", questions: [{ q: "1. Was ist das?", a: "Das ist Milch." }, { q: "2. Ist die Milch frisch?", a: "Ja, die Milch ist frisch." }, { q: "3. Trinkst du Milch zum Frühstück?", a: "Ja, ich trinke Milch zum Frühstück." }] },
+            schere_1: { title: "Die Schere (1)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Schere." }, { q: "2. Ist die Schere scharf?", a: "Ja, die Schere ist scharf." }, { q: "3. Kannst du damit schneiden?", a: "Ja, ich kann damit Papier schneiden." }] },
+            fenster_1: { title: "Das Fenster (1)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Fenster." }, { q: "2. Ist das Fenster offen?", a: "Nein, es ist geschlossen." }, { q: "3. Kannst du durch das Fenster sehen?", a: "Ja, ich kann durch das Fenster sehen." }] },
+            bleistift_1: { title: "Der Bleistift (1)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Bleistift." }, { q: "2. Ist der Bleistift lang?", a: "Ja, der Bleistift ist lang." }, { q: "3. Schreibst du mit dem Bleistift?", a: "Ja, ich schreibe mit dem Bleistift." }] },
+            cd_1: { title: "Die CD (1)", questions: [{ q: "1. Was ist das?", a: "Das ist eine CD." }, { q: "2. Hörst du Musik von der CD?", a: "Ja, ich höre Musik von der CD." }, { q: "3. Ist die CD neu?", a: "Nein, die CD ist alt." }] },
+            auto_1: { title: "Das Auto (1)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Auto." }, { q: "2. Ist das Auto schnell?", a: "Ja, das Auto ist sehr schnell." }, { q: "3. Fährst du dieses Auto?", a: "Nein, ich fahre dieses Auto nicht." }] },
+            buch_geschlossen_1: { title: "Das geschlossene Buch (1)", questions: [{ q: "1. Was ist das?", a: "Das ist ein geschlossenes Buch." }, { q: "2. Ist es dick?", a: "Ja, es ist ein dickes Buch." }, { q: "3. Liegt es auf dem Tisch?", a: "Ja, es liegt auf dem Tisch." }] },
+
+            // Image 2 (Screenshot_20250703_224241_Drive.jpg - 12 items)
+            offenes_buch_2: { title: "Das offene Buch (2)", questions: [{ q: "1. Was ist das?", a: "Das ist ein offenes Buch auf einem Ständer." }, { q: "2. Liest du es gerade?", a: "Ja, ich lese es gerade." }, { q: "3. Ist die Schrift groß?", a: "Ja, die Schrift ist groß." }] },
+            buch_geschlossen_2: { title: "Das geschlossene Buch (2)", questions: [{ q: "1. Was ist das?", a: "Das ist ein geschlossenes Buch." }, { q: "2. Ist es ein Roman?", a: "Ja, es ist ein Roman." }, { q: "3. Hast du es schon gelesen?", a: "Nein, ich habe es noch nicht gelesen." }] },
+            tasche_2: { title: "Die Tasche (2)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Tasche." }, { q: "2. Ist die Tasche leer?", a: "Nein, die Tasche ist nicht leer." }, { q: "3. Was trägst du in der Tasche?", a: "Ich trage mein Handy in der Tasche." }] },
+            jacke_2: { title: "Die Jacke (2)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Jacke." }, { q: "2. Ist die Jacke neu?", a: "Nein, die Jacke ist alt." }, { q: "3. Ist sie warm genug für den Winter?", a: "Ja, sie ist warm genug für den Winter." }] },
+            farbeimer_2: { title: "Der Farbeimer (2)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Farbeimer." }, { q: "2. Ist der Eimer voll?", a: "Ja, der Eimer ist voll." }, { q: "3. Welche Farbe ist das?", a: "Das ist grüne Farbe." }] },
+            zeitung_zerknittert_2: { title: "Die zerknitterte Zeitung (2)", questions: [{ q: "1. Was ist das?", a: "Das ist eine zerknitterte Zeitung." }, { q: "2. Hast du sie gelesen?", a: "Ja, ich habe sie schon gelesen." }, { q: "3. Ist sie von heute?", a: "Nein, sie ist von gestern." }] },
+            fussball_2: { title: "Der Fußball (2)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Fußball." }, { q: "2. Ist der Fußball neu?", a: "Nein, der Fußball ist nicht neu." }, { q: "3. Spielst du oft Fußball?", a: "Ja, ich spiele oft Fußball mit Freunden." }] },
+            hund_2: { title: "Der Hund (2)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Hund." }, { q: "2. Ist der Hund groß?", a: "Nein, der Hund ist klein." }, { q: "3. Ist der Hund freundlich?", a: "Ja, der Hund ist sehr freundlich." }] },
+            glas_2: { title: "Das Glas (2)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Glas." }, { q: "2. Ist das Glas sauber?", a: "Ja, das Glas ist sauber." }, { q: "3. Was ist im Glas?", a: "Im Glas ist Wasser." }] },
+            brief_2: { title: "Der Brief (2)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Brief." }, { q: "2. Ist der Brief lang?", a: "Nein, der Brief ist kurz." }, { q: "3. Hast du den Brief bekommen?", a: "Ja, ich habe den Brief heute bekommen." }] },
+            pullover_2: { title: "Der Pullover (2)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Pullover." }, { q: "2. Ist der Pullover blau?", a: "Ja, der Pullover ist blau." }, { q: "3. Ist er warm?", a: "Ja, er ist sehr warm." }] },
+            maus_2: { title: "Die Maus (2)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Computermaus." }, { q: "2. Ist die Maus kabellos?", a: "Ja, die Maus ist kabellos." }, { q: "3. Benutzt du die Maus oft?", a: "Ja, ich benutze die Maus oft beim Arbeiten." }] },
+
+            // Image 3 (Screenshot_20250703_224403_Drive.jpg - 12 items)
+            maus_3: { title: "Die Maus (3)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Computermaus." }, { q: "2. Ist die Maus ergonomisch?", a: "Ja, die Maus ist ergonomisch." }, { q: "3. Funktioniert sie gut?", a: "Ja, sie funktioniert sehr gut." }] },
+            blatt_3: { title: "Das Blatt (3)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Blatt Papier." }, { q: "2. Ist das Blatt leer?", a: "Ja, das Blatt ist leer." }, { q: "3. Brauchst du das Blatt?", a: "Ja, ich brauche das Blatt für Notizen." }] },
+            flasche_3: { title: "Die Flasche (3)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Flasche." }, { q: "2. Ist die Flasche aus Glas?", a: "Nein, die Flasche ist aus Plastik." }, { q: "3. Ist sie voll?", a: "Nein, sie ist leer." }] },
+            schluessel_3: { title: "Der Schlüssel (3)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Schlüssel." }, { q: "2. Ist der Schlüssel neu?", a: "Nein, der Schlüssel ist alt." }, { q: "3. Ist er für die Wohnungstür?", a: "Ja, er ist für die Wohnungstür." }] },
+            cd_3: { title: "Die CD (3)", questions: [{ q: "1. Was ist das?", a: "Das ist eine CD." }, { q: "2. Ist das eine Musik-CD?", a: "Ja, das ist eine Musik-CD." }, { q: "3. Hast du einen CD-Player?", a: "Ja, ich habe einen CD-Player." }] },
+            telefon_3: { title: "Das Telefon (3)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Telefon." }, { q: "2. Ist das Telefon alt?", a: "Ja, das Telefon ist alt." }, { q: "3. Kannst du damit telefonieren?", a: "Ja, ich kann damit telefonieren." }] },
+            lampe_3: { title: "Die Lampe (3)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Lampe." }, { q: "2. Ist die Lampe groß?", a: "Nein, die Lampe ist klein." }, { q: "3. Gibt sie viel Licht?", a: "Ja, sie gibt viel Licht." }] },
+            auto_3: { title: "Das Auto (3)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Auto." }, { q: "2. Ist das Auto sauber?", a: "Nein, das Auto ist schmutzig." }, { q: "3. Fährst du oft Auto?", a: "Ja, ich fahre oft Auto." }] },
+            schrank_3: { title: "Der Schrank (3)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Schrank." }, { q: "2. Ist der Schrank aus Holz?", a: "Ja, der Schrank ist aus Holz." }, { q: "3. Was ist im Schrank?", a: "Im Schrank sind Bücher." }] },
+            torte_3: { title: "Die Torte (3)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Torte." }, { q: "2. Ist die Torte süß?", a: "Ja, die Torte ist sehr süß." }, { q: "3. Isst du gern Torte?", a: "Ja, ich esse sehr gern Torte." }] },
+            kugelschreiber_3: { title: "Der Kugelschreiber (3)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Kugelschreiber." }, { q: "2. Ist der Kugelschreiber neu?", a: "Nein, der Kugelschreiber ist nicht neu." }, { q: "3. Schreibst du damit?", a: "Ja, ich schreibe damit meine Hausaufgaben." }] },
+            koffer_3: { title: "Der Koffer (3)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Koffer." }, { q: "2. Ist der Koffer groß?", a: "Ja, der Koffer ist groß." }, { q: "3. Ist er gepackt?", a: "Nein, er ist noch nicht gepackt." }] },
+
+            // Image 4 (Screenshot_20250703_224527_Drive.jpg - 12 items)
+            zeitung_gefaltet_4: { title: "Die gefaltete Zeitung (4)", questions: [{ q: "1. Was ist das?", a: "Das ist eine gefaltete Zeitung." }, { q: "2. Liegt sie auf dem Tisch?", a: "Ja, sie liegt auf dem Tisch." }, { q: "3. Hast du sie schon gelesen?", a: "Nein, ich habe sie noch nicht gelesen." }] },
+            uhr_tisch_4: { title: "Die Tischuhr (4)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Tischuhr." }, { q: "2. Zeigt sie die richtige Zeit an?", a: "Ja, sie zeigt die richtige Zeit an." }, { q: "3. Steht sie im Schlafzimmer?", a: "Ja, sie steht im Schlafzimmer." }] },
+            buch_geschlossen_4: { title: "Das geschlossene Buch (4)", questions: [{ q: "1. Was ist das?", a: "Das ist ein geschlossenes Buch." }, { q: "2. Ist es ein Kinderbuch?", a: "Nein, es ist kein Kinderbuch." }, { q: "3. Möchtest du es lesen?", a: "Ja, ich möchte es lesen." }] },
+            tasse_4: { title: "Die Tasse (4)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Tasse." }, { q: "2. Ist die Tasse leer?", a: "Ja, die Tasse ist leer." }, { q: "3. Trinkst du Kaffee aus der Tasse?", a: "Ja, ich trinke Kaffee aus der Tasse." }] },
+            kugelschreiber_4: { title: "Der Kugelschreiber (4)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Kugelschreiber." }, { q: "2. Ist die Mine voll?", a: "Ja, die Mine ist voll." }, { q: "3. Kannst du mir deinen Kugelschreiber leihen?", a: "Ja, klar, hier ist mein Kugelschreiber." }] },
+            tablet_4: { title: "Das Tablet (4)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Tablet." }, { q: "2. Ist das Tablet schnell?", a: "Ja, das Tablet ist sehr schnell." }, { q: "3. Benutzt du es für die Schule?", a: "Ja, ich benutze es für die Schule." }] },
+            lampe_4: { title: "Die Lampe (4)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Lampe." }, { q: "2. Ist das Licht hell?", a: "Ja, das Licht ist hell." }, { q: "3. Steht die Lampe auf dem Nachttisch?", a: "Ja, sie steht auf dem Nachttisch." }] },
+            schluessel_4: { title: "Der Schlüssel (4)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Schlüssel." }, { q: "2. Ist der Schlüssel klein?", a: "Ja, der Schlüssel ist klein." }, { q: "3. Hast du einen Ersatzschlüssel?", a: "Nein, ich habe keinen Ersatzschlüssel." }] },
+            flasche_4: { title: "Die Flasche (4)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Flasche." }, { q: "2. Ist die Flasche aus Glas?", a: "Ja, die Flasche ist aus Glas." }, { q: "3. Ist sie wiederverwendbar?", a: "Ja, sie ist wiederverwendbar." }] },
+            maus_4: { title: "Die Maus (4)", questions: [{ q: "1. Was ist das?", a: "Das ist eine Computermaus." }, { q: "2. Ist die Maus drahtlos?", a: "Ja, die Maus ist drahtlos." }, { q: "3. Brauchst du eine neue Maus?", a: "Nein, meine Maus funktioniert noch gut." }] },
+            glas_4: { title: "Das Glas (4)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Glas." }, { q: "2. Ist das Glas voll mit Saft?", a: "Nein, es ist voll mit Wasser." }, { q: "3. Ist es ein Weinglas?", a: "Nein, es ist ein normales Trinkglas." }] },
+            koffer_4: { title: "Der Koffer (4)", questions: [{ q: "1. Was ist das?", a: "Das ist ein Koffer." }, { q: "2. Ist der Koffer alt?", a: "Ja, der Koffer ist alt." }, { q: "3. Ist er für eine lange Reise?", a: "Ja, er ist für eine lange Reise." }] }
+        };
+
+        const contentArea = document.getElementById('content-area');
+        const navButtonsContainer = document.querySelector('.flex.flex-wrap.justify-center.gap-5.mb-8');
+
+        // Function to render topic content
+        function renderTopic(topicKey) {
+            const topic = topics[topicKey];
+            contentArea.innerHTML = ''; // Clear previous content
+
+            topic.questions.forEach((qa, index) => {
+                const card = document.createElement('div');
+                card.className = 'topic-card';
+                card.innerHTML = `
+                    <h3 class="text-2xl font-semibold text-white mb-2">${topic.title} - Frage ${index + 1}</h3>
+                    <div class="question-section">
+                        <p class="text-xl text-gray-100">${qa.q}</p>
+                    </div>
+                    <div class="answer-section" id="answer-${topicKey}-${index}">
+                        <p class="text-xl text-gray-100">${qa.a}</p>
+                    </div>
+                    <button class="show-answer-btn" data-target="answer-${topicKey}-${index}">Antwort anzeigen</button>
+                `;
+                contentArea.appendChild(card);
+            });
+
+            // Add event listeners to new buttons
+            document.querySelectorAll('.show-answer-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const targetId = event.target.dataset.target;
+                    const answerSection = document.getElementById(targetId);
+                    if (answerSection.style.display === 'block') {
+                        answerSection.style.display = 'none';
+                        event.target.textContent = 'Antwort anzeigen';
+                    } else {
+                        answerSection.style.display = 'block';
+                        event.target.textContent = 'Antwort verstecken';
+                    }
+                });
+            });
+        }
+
+        // Dynamically create navigation buttons based on the topics object
+        function createNavButtons() {
+            navButtonsContainer.innerHTML = ''; // Clear existing buttons
+            Object.keys(topics).forEach(topicKey => {
+                const button = document.createElement('button');
+                button.className = 'nav-button';
+                button.dataset.topic = topicKey;
+                button.textContent = topics[topicKey].title;
+                navButtonsContainer.appendChild(button);
+
+                button.addEventListener('click', (event) => {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+                    // Add active class to the clicked button
+                    event.target.classList.add('active');
+                    // Render the selected topic
+                    renderTopic(event.target.dataset.topic);
+                });
+            });
+        }
+
+        // Initial setup on DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', () => {
+            createNavButtons(); // Create buttons first
+            // Set the first button as active and render its content
+            const firstButton = document.querySelector('.nav-button');
+            if (firstButton) {
+                firstButton.classList.add('active');
+                renderTopic(firstButton.dataset.topic);
+            }
+        });
+    </script>
+</body>
+</html>

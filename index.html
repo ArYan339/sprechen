@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deutsch Lernen - Sprechen Teil 1</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #a7b7e2, #e0c3fc, #8ec5fc); /* Soft gradient background */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.2); /* Transparent white background */
+            backdrop-filter: blur(10px); /* Glassmorphism blur effect */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Light border */
+            border-radius: 20px; /* Rounded corners */
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* Subtle shadow */
+            padding: 30px;
+            margin: 20px;
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            color: #333; /* Darker text for contrast */
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15); /* Slightly less transparent for cards */
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        h1, h2 {
+            color: #222;
+            font-weight: 600;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #444;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .glass-container {
+                padding: 20px;
+                margin: 10px;
+            }
+            .nav-link {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="glass-container">
+        <header class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Willkommen zur Deutsch-Lernseite</h1>
+            <p class="text-lg md:text-xl text-gray-700">Dein Weg zum besseren Deutschsprechen</p>
+        </header>
+
+        <nav class="glass-card flex flex-wrap justify-center gap-4">
+            <a href="index.html" class="nav-link">Startseite</a>
+            <a href="teil2.html" class="nav-link">Sprechen Teil 2</a>
+            <a href="teil3.html" class="nav-link">Sprechen Teil 3</a>
+        </nav>
+
+        <main class="glass-card">
+            <h2 class="text-3xl font-semibold mb-4">Sprechen Teil 1: Über mich</h2>
+            <p class="text-gray-700 mb-6">
+                Hallo! Der Prüfer/die Prüferin wird Sie bitten, sich vorzustellen. Hier ist ein Beispiel, wie Sie sich präsentieren können.
+            </p>
+
+            <div class="glass-card p-6">
+                <h3 class="text-2xl font-medium mb-3">Meine Vorstellung</h3>
+                <p class="text-lg mb-2">
+                    Guten Tag! Mein Name ist <strong class="font-semibold">Rambachan Kushwaha</strong>.
+                </p>
+                <p class="text-lg mb-2">
+                    Ich komme aus <strong class="font-semibold">Nepal</strong> und wohne in <strong class="font-semibold">Kathmandu</strong>.
+                </p>
+                <p class="text-lg mb-2">
+                    Ich bin <strong class="font-semibold">Student</strong> und lerne zurzeit <strong class="font-semibold">Deutsch</strong>.
+                </p>
+                <p class="text-lg mb-2">
+                    Ich spreche <strong class="font-semibold">Hindi, Englisch und Nepali</strong>.
+                </p>
+                <p class="text-lg">
+                    Meine Hobbys sind <strong class="font-semibold">Programmieren, Schach spielen und Musik hören</strong> <br>
+                     <p class="text-lg mb-2">
+                Danke! <strong class="font-semibold"></strong>.
+                </p>
+                </p>
+            </div>
+        </main>
+
+        <footer class="text-center text-gray-600 text-sm mt-4">
+            <p>&copy; 2025 Rambachan Kushwaha. Alle Rechte vorbehalten.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
